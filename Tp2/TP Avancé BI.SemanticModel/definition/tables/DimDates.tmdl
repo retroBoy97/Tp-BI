@@ -40,6 +40,7 @@ table DimDates
 		lineageTag: ce7b0ed5-f8ac-4ec3-9439-d59cbb2cacc0
 		summarizeBy: none
 		sourceColumn: Nom du mois
+		sortByColumn: Mois
 
 		annotation SummarizationSetBy = Automatic
 
@@ -62,7 +63,7 @@ table DimDates
 				    #"Type modifié" = Table.TransformColumnTypes(#"Colonnes renommées",{{"Date", type date}}),
 				    #"Année insérée" = Table.AddColumn(#"Type modifié", "Année", each Date.Year([Date]), Int64.Type),
 				    #"Mois inséré" = Table.AddColumn(#"Année insérée", "Mois", each Date.Month([Date]), Int64.Type),
-				    #"Nom du mois inséré" = Table.AddColumn(#"Mois inséré", "Nom du mois", each Date.MonthName([Date]), type text),
+				    #"Nom du mois inséré" = Table.AddColumn(#"Mois inséré", "Nom du mois", each Date.MonthName([Date], "fr-FR"), type text),
 				    #"Semaine de l'année insérée" = Table.AddColumn(#"Nom du mois inséré", "Semaine de l'année", each Date.WeekOfYear([Date]), Int64.Type)
 				in
 				    #"Semaine de l'année insérée"
