@@ -1,0 +1,44 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Transformer le fichier à partir de Ventes'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transformer le fichier à partir de Ventes\Requêtes d''assistance'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Paramètres
+
+	annotation PBI_QueryGroupOrder = 2
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Ventes","DimDates","Paramètre1","Transformer l'exemple de fichier","Exemple de fichier","Transformer le fichier","CheminDossierVentes","DimBannière1","DimCatégorie1","DimDept1","DimFournisseur1","DimMagasin1","DimProduit1","Inventaires","DateDébut","DateFin","NbJours","CheminDossierFichiersSources"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Ventes
+ref table DateTableTemplate_bc01031e-d724-4fb5-ac56-0ef039f5bb42
+ref table DimBannière1
+ref table DimCatégorie1
+ref table DimDept1
+ref table DimFournisseur1
+ref table DimMagasin1
+ref table LocalDateTable_50bfda4c-abc4-45cd-ae4e-294825dc63e8
+ref table LocalDateTable_7c739204-fc7f-4dcb-9ca2-d60f7bcdfe8c
+ref table DimProduit1
+ref table Inventaires
+ref table NbJours
+ref table DimDates
+ref table LocalDateTable_1c7c6487-4827-4153-8431-ec76052b65a8
+
+ref cultureInfo fr-FR
+

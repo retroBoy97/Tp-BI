@@ -1,0 +1,50 @@
+table DimFournisseur1
+	lineageTag: 4a98b978-a3cc-4cec-92b0-115f9cf7067a
+
+	column 'Numéro du fournisseur'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d33be6c-c7bc-42c6-8565-445fc3c2c28a
+		summarizeBy: none
+		sourceColumn: Numéro du fournisseur
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nom du fournisseur'
+		dataType: string
+		lineageTag: de2296a5-ae0e-4aab-9a3b-ceeb3d35d33b
+		summarizeBy: none
+		sourceColumn: Nom du fournisseur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ville
+		dataType: string
+		lineageTag: 46e92903-a592-4b07-8348-fe32a16bfe21
+		summarizeBy: none
+		sourceColumn: Ville
+
+		annotation SummarizationSetBy = Automatic
+
+	column Province
+		dataType: string
+		lineageTag: 83fc1ac2-3bf3-4685-a110-63cfe7243c59
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimFournisseur1 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(CheminDossierFichiersSources &"\DimFournisseurs.xlsx"), null, true),
+				    DimFournisseur_Table = Source{[Item="DimFournisseur",Kind="Table"]}[Data],
+				    #"Type modifié" = Table.TransformColumnTypes(DimFournisseur_Table,{{"Numéro du fournisseur", Int64.Type}, {"Nom du fournisseur", type text}, {"Ville", type text}, {"Province", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

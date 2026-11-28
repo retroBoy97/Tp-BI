@@ -1,0 +1,55 @@
+relationship c04144b5-2b0e-466c-801b-352fb061316f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimMagasin1.'Date d''ouverture'
+	toColumn: LocalDateTable_50bfda4c-abc4-45cd-ae4e-294825dc63e8.Date
+
+relationship ec5ea7a1-5619-433f-b2e5-d520f3c3c562
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimMagasin1.'Renouvellement du bail'
+	toColumn: LocalDateTable_7c739204-fc7f-4dcb-9ca2-d60f7bcdfe8c.Date
+
+relationship AutoDetected_8420d912-a81e-4bd4-ac17-90f2d2f18274
+	fromColumn: Ventes.'Numéro du magasin'
+	toColumn: DimMagasin1.'Numéro du magasin'
+
+relationship AutoDetected_d0b62683-c2ae-46fb-8695-8ca7415f3f4c
+	fromColumn: Ventes.'Numéro du produit'
+	toColumn: DimProduit1.'Numéro du produit'
+
+relationship AutoDetected_17318579-3b3e-49cd-9997-318950255d5a
+	fromColumn: DimMagasin1.'Numéro de la bannière'
+	toColumn: DimBannière1.'Numéro de la bannière'
+
+relationship AutoDetected_93a12eff-c943-4291-9fba-b06b221d645a
+	fromColumn: DimMagasin1.'Numéro de la catégorie'
+	toColumn: DimCatégorie1.'Numéro de la catégorie'
+
+relationship AutoDetected_9dc2ce79-8b29-4be6-9bf7-19008e35c2af
+	fromColumn: DimProduit1.'Numéro du fournisseur'
+	toColumn: DimFournisseur1.'Numéro du fournisseur'
+
+relationship 2d9e0144-2297-44e1-a0cd-222de495badf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDates.Date
+	toColumn: LocalDateTable_1c7c6487-4827-4153-8431-ec76052b65a8.Date
+
+relationship 31b654fc-5105-ab72-437d-931284d55769
+	fromColumn: DimProduit1.'Numéro du département'
+	toColumn: DimDept1.'Numéro de département'
+
+relationship bcee9f81-22f5-dfc5-3b49-acf77e6a3fed
+	fromColumn: Ventes.Date
+	toColumn: DimDates.Date
+
+relationship 4d0f5ec8-8b85-f980-d8d5-7bc2fbc450f0
+	fromColumn: Inventaires.Date
+	toColumn: DimDates.Date
+
+relationship c5010735-24b4-d55d-3ecb-baff3979e397
+	fromColumn: Inventaires.NoMagasin
+	toColumn: DimMagasin1.'Numéro du magasin'
+
+relationship c512b807-da31-be36-bb52-a0651c392da9
+	fromColumn: Inventaires.NoDept
+	toColumn: DimDept1.'Numéro de département'
+

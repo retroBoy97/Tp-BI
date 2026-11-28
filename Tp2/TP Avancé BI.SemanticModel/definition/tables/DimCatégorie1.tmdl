@@ -1,0 +1,34 @@
+table DimCatégorie1
+	lineageTag: 5017edd6-0d3c-468a-9591-8b755588cbf1
+
+	column 'Numéro de la catégorie'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0df45020-6cd0-4e38-9377-40c3d83e61c5
+		summarizeBy: none
+		sourceColumn: Numéro de la catégorie
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nom de la catégorie'
+		dataType: string
+		lineageTag: 20a6213f-38cf-4622-a5f7-f8f2e55725fe
+		summarizeBy: none
+		sourceColumn: Nom de la catégorie
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCatégorie1 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(CheminDossierFichiersSources &"\DimCategorie.xlsx"), null, true),
+				    DimCatégorie_Table = Source{[Item="DimCatégorie",Kind="Table"]}[Data],
+				    #"Type modifié" = Table.TransformColumnTypes(DimCatégorie_Table,{{"Numéro de la catégorie", Int64.Type}, {"Nom de la catégorie", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,73 @@
+table DimDates
+	lineageTag: c6928e0b-5995-4056-862d-f303941e88af
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ebb3d68d-40f5-444d-ba9b-337e409a82be
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 2d9e0144-2297-44e1-a0cd-222de495badf
+			defaultHierarchy: LocalDateTable_1c7c6487-4827-4153-8431-ec76052b65a8.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Année
+		dataType: int64
+		formatString: 0
+		lineageTag: f735c715-b779-49f0-8096-9cfa992a13c2
+		summarizeBy: sum
+		sourceColumn: Année
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mois
+		dataType: int64
+		formatString: 0
+		lineageTag: c4efddbd-f943-4717-91d8-c609cc1c2c28
+		summarizeBy: sum
+		sourceColumn: Mois
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nom du mois'
+		dataType: string
+		lineageTag: ce7b0ed5-f8ac-4ec3-9439-d59cbb2cacc0
+		summarizeBy: none
+		sourceColumn: Nom du mois
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semaine de l''année'
+		dataType: int64
+		formatString: 0
+		lineageTag: 868bc7ac-f1e5-4896-8faa-7f25439a51ac
+		summarizeBy: sum
+		sourceColumn: Semaine de l'année
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDates = m
+		mode: import
+		source =
+				let
+				    Source = List.Dates(DateDébut, NbJours, #duration(1,0,0,0)),
+				    #"Converti en table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Converti en table",{{"Column1", "Date"}}),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Colonnes renommées",{{"Date", type date}}),
+				    #"Année insérée" = Table.AddColumn(#"Type modifié", "Année", each Date.Year([Date]), Int64.Type),
+				    #"Mois inséré" = Table.AddColumn(#"Année insérée", "Mois", each Date.Month([Date]), Int64.Type),
+				    #"Nom du mois inséré" = Table.AddColumn(#"Mois inséré", "Nom du mois", each Date.MonthName([Date]), type text),
+				    #"Semaine de l'année insérée" = Table.AddColumn(#"Nom du mois inséré", "Semaine de l'année", each Date.WeekOfYear([Date]), Int64.Type)
+				in
+				    #"Semaine de l'année insérée"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,80 @@
+table Ventes
+	lineageTag: 3c08a4a4-c2da-4820-810d-e1f224abd5b1
+
+	column 'Numéro de facture'
+		dataType: int64
+		formatString: 0
+		lineageTag: 378cc33f-332e-454d-9dec-a9ae165979db
+		summarizeBy: sum
+		sourceColumn: Numéro de facture
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Numéro du magasin'
+		dataType: int64
+		formatString: 0
+		lineageTag: d39e724a-8d7a-49b6-a498-baf7f746a35d
+		summarizeBy: none
+		sourceColumn: Numéro du magasin
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Numéro du produit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4fc223f0-ba14-4686-a2b9-ed718397ab01
+		summarizeBy: none
+		sourceColumn: Numéro du produit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unités vendues'
+		dataType: int64
+		formatString: 0
+		lineageTag: a55d5d51-0c2e-4653-b771-8ee35da0f552
+		summarizeBy: sum
+		sourceColumn: Unités vendues
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rabais en %'
+		dataType: double
+		lineageTag: 936a6686-a47d-461f-a951-ecc095c24259
+		summarizeBy: sum
+		sourceColumn: Rabais en %
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 662081d7-ea71-4438-8081-8cbb45d83567
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Ventes = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files(CheminDossierVentes),
+				    #"Fichiers masqués filtrés1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Appeler une fonction personnalisée1" = Table.AddColumn(#"Fichiers masqués filtrés1", "Transformer le fichier", each #"Transformer le fichier"([Content])),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Appeler une fonction personnalisée1", {"Name", "Source.Name"}),
+				    #"Autres colonnes supprimées1" = Table.SelectColumns(#"Colonnes renommées1", {"Source.Name", "Transformer le fichier"}),
+				    #"Colonne de tables développée1" = Table.ExpandTableColumn(#"Autres colonnes supprimées1", "Transformer le fichier", Table.ColumnNames(#"Transformer le fichier"(#"Exemple de fichier"))),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Colonne de tables développée1",{{"Source.Name", type text}, {"Numéro de facture", Int64.Type}, {"Numéro du magasin", Int64.Type}, {"Numéro du produit", Int64.Type}, {"Unités vendues", Int64.Type}, {"Rabais en %", type number}, {"Date", type date}}),
+				    #"Lignes filtrées" = Table.SelectRows(#"Type modifié", each true),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Lignes filtrées",{"Source.Name"})
+				in
+				    #"Colonnes supprimées"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

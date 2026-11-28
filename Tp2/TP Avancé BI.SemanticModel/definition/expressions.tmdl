@@ -1,0 +1,75 @@
+expression Paramètre1 = #"Exemple de fichier" meta [IsParameterQuery=true, BinaryIdentifier=#"Exemple de fichier", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: cf166daf-2ccd-4283-bd61-563f2beff97f
+	queryGroup: 'Transformer le fichier à partir de Ventes\Requêtes d''assistance'
+
+	annotation PBI_ResultType = Binary
+
+expression CheminDossierVentes = "C:\Users\Dell\Downloads\Sources_de_donnees 1\Sources_de_donnees\Ventes" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: ff31deb9-e575-4539-912b-b8ea9c74ce96
+	queryGroup: Paramètres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'Transformer l''exemple de fichier' =
+		let
+		    Source = Excel.Workbook(Paramètre1, null, true),
+		    Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data]
+		in
+		    Table1_Table
+	lineageTag: f9c58e21-b163-4211-bc02-614acdb784c6
+	queryGroup: 'Transformer le fichier à partir de Ventes'
+
+	annotation PBI_ResultType = Table
+
+expression 'Exemple de fichier' =
+		let
+		    Source = Folder.Files("C:\Users\Dell\Downloads\Sources_de_donnees 1\Sources_de_donnees\Ventes"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 5cae0efc-07c6-4d72-8760-437d6678201e
+	queryGroup: 'Transformer le fichier à partir de Ventes\Requêtes d''assistance'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transformer le fichier' =
+		let
+		    Source = (Paramètre1) => let
+		        Source = Excel.Workbook(Paramètre1, null, true),
+		        Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data]
+		    in
+		        Table1_Table
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transformer l\u0027exemple de fichier""}" ]
+	lineageTag: e3766ac8-ef9c-4fab-8d22-53b7449047c9
+	queryGroup: 'Transformer le fichier à partir de Ventes\Requêtes d''assistance'
+
+	annotation PBI_ResultType = Function
+
+expression DateDébut = #date(2013, 1, 1) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+	lineageTag: 54d0932d-1a7d-4c09-b2f3-a90d0e9322fb
+	queryGroup: Paramètres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression DateFin = #date(2015, 12, 31) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+	lineageTag: f466c07f-1f86-4aaa-a8ab-3047c3cb0069
+	queryGroup: Paramètres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression CheminDossierFichiersSources = "C:\Users\Dell\Downloads\Sources_de_donnees 1\Sources_de_donnees" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6b047918-675b-4e2b-8de0-0d2a31c6afac
+	queryGroup: Paramètres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
