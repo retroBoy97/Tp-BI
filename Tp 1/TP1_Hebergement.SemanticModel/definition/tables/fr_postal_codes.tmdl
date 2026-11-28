@@ -1,0 +1,61 @@
+table fr_postal_codes
+	lineageTag: b333ffc0-3c90-4759-8764-3b10ea40511a
+
+	column Latitude
+		dataType: double
+		lineageTag: 35b49803-e865-4cdc-9a09-f44f4e4418d3
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: 2be1cf1c-ce48-471a-85e2-20cf0189a111
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Code postal'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3aa3797b-a1f3-4f40-b756-9ee60a99014b
+		summarizeBy: sum
+		sourceColumn: Code postal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fr_postal_codes = m
+		mode: import
+		queryGroup: 'Tables temporaires'
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CheminFichierCodesPostaux),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"Code postal", type text}, {"Nom de la place", type text}, {"Région", type text}, {"Département", type text}, {"Ville", type text}, {"Latitude", type number}, {"Longitude", type number}}),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Type modifié",{"Nom de la place", "Région", "Département", "Ville"}),
+				    #"Fractionner la colonne par délimiteur" = Table.SplitColumn(#"Colonnes supprimées", "Code postal", Splitter.SplitTextByDelimiter(" ", QuoteStyle.Csv), {"Code postal.1", "Code postal.2", "Code postal.3"}),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur",{{"Code postal.1", Int64.Type}, {"Code postal.2", type text}, {"Code postal.3", Int64.Type}}),
+				    #"Colonnes supprimées1" = Table.RemoveColumns(#"Type modifié1",{"Code postal.2"}),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Colonnes supprimées1",{{"Code postal.1", "Code postal"}}),
+				    #"Colonnes supprimées2" = Table.RemoveColumns(#"Colonnes renommées",{"Code postal.3"})
+				in
+				    #"Colonnes supprimées2"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

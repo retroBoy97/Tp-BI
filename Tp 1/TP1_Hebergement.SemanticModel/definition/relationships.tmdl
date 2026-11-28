@@ -1,0 +1,5 @@
+relationship 62acfbfc-565f-417f-9ddb-4df165d30bbf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Hébergement.'DATE DE CLASSEMENT'
+	toColumn: LocalDateTable_7bb82687-8a0e-44fd-9c5a-f748b164de41.Date
+

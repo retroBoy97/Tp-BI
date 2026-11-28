@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "TP1_Hebergement"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "157ae884-fc39-481a-bd3e-5c5edb45d193"
+  }
+}
