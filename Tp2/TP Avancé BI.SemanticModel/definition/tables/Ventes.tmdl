@@ -1,8 +1,49 @@
 table Ventes
 	lineageTag: 3c08a4a4-c2da-4820-810d-e1f224abd5b1
 
+	measure VentesBrutes$ = SUMX(Ventes, RELATED(DimProduit1[Prix unitaire]) * Ventes[Unités vendues])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 58d6d948-f4ec-450e-be67-012f5f67b1c7
+
+	measure VentesBrutes$AnPrec = CALCULATE([VentesBrutes$], DATEADD(DimDates[Date], -1, YEAR))
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 72034423-24a9-415c-8b5f-7622f9fbef71
+
+	measure VentesBrutes$YTD = CALCULATE([VentesBrutes$], DATESYTD(DimDates[Date]))
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: eedb103f-abde-41d5-a62e-d234d09a02c9
+
+	measure NbTransactions = COUNTROWS(Ventes)
+		formatString: #,0
+		lineageTag: 2917328c-0a90-4ebe-a245-aedceaca09e3
+
+	measure NbTransactionsAnPrec = CALCULATE([NbTransactions], DATEADD(DimDates[Date], -1, YEAR))
+		formatString: #,0
+		lineageTag: a96ff4f4-bd1a-4b71-acfc-0a8799223aea
+
+	measure NbTransactionsYTD = CALCULATE([NbTransactions], DATESYTD(DimDates[Date]))
+		formatString: #,0
+		lineageTag: 7dc499fb-3447-4975-891d-9a92a42bb264
+
+	measure Écart$VentesBrutesAnPrec = [VentesBrutes$] - [VentesBrutes$AnPrec]
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 8a259d77-671e-4579-8d84-deada57fc1f1
+
+	measure ÉcartNbTransactionsAnPrec = [NbTransactions] - [NbTransactionsAnPrec]
+		formatString: #,0
+		lineageTag: 3c13ef37-1208-4589-bb95-b0c6f2ada6ab
+
+	measure Écart%NbTransactionsAnPrec = DIVIDE([ÉcartNbTransactionsAnPrec], [NbTransactionsAnPrec], 1)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 13767db3-6f56-4c87-9169-67b268051bf9
+
+	measure Écart%VentesBrutes$AnPrec = DIVIDE([Écart$VentesBrutesAnPrec], [VentesBrutes$AnPrec], 1)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: d469ef53-d94b-4ef8-892c-650c39a2813f
+
 	column 'Numéro de facture'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 378cc33f-332e-454d-9dec-a9ae165979db
 		summarizeBy: sum
@@ -12,6 +53,7 @@ table Ventes
 
 	column 'Numéro du magasin'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: d39e724a-8d7a-49b6-a498-baf7f746a35d
 		summarizeBy: none
@@ -21,6 +63,7 @@ table Ventes
 
 	column 'Numéro du produit'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 4fc223f0-ba14-4686-a2b9-ed718397ab01
 		summarizeBy: none
@@ -30,6 +73,7 @@ table Ventes
 
 	column 'Unités vendues'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: a55d5d51-0c2e-4653-b771-8ee35da0f552
 		summarizeBy: sum
@@ -39,6 +83,7 @@ table Ventes
 
 	column 'Rabais en %'
 		dataType: double
+		isHidden
 		lineageTag: 936a6686-a47d-461f-a951-ecc095c24259
 		summarizeBy: sum
 		sourceColumn: Rabais en %
@@ -49,6 +94,7 @@ table Ventes
 
 	column Date
 		dataType: dateTime
+		isHidden
 		formatString: Long Date
 		lineageTag: 662081d7-ea71-4438-8081-8cbb45d83567
 		summarizeBy: none
