@@ -4,5 +4,27 @@
   "displayName": "Evaluation des établissements",
   "displayOption": "FitToPage",
   "height": 1080,
-  "width": 1920
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "778cddd5400bad367140",
+      "target": "bdb671d39023860edd09",
+      "type": "DataFilter"
+    },
+    {
+      "source": "778cddd5400bad367140",
+      "target": "bc9a805d069c9394404a",
+      "type": "DataFilter"
+    },
+    {
+      "source": "bdb671d39023860edd09",
+      "target": "778cddd5400bad367140",
+      "type": "DataFilter"
+    },
+    {
+      "source": "778cddd5400bad367140",
+      "target": "040fc35365127b78350a",
+      "type": "NoFilter"
+    }
+  ]
 }
