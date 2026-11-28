@@ -30,7 +30,7 @@ expression 'Hébergement temporaire' =
 	annotation PBI_ResultType = Table
 
 /// Paramètre permettant de retracer le chemin complet vers le fichier Hebergement-paris.csv.
-expression CheminFichierHébergement = "C:\Users\MSI\Downloads\Hebergement-paris.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression CheminFichierHébergement = "C:\Users\kacem\OneDrive\Documents\TP-BI\Tp 1\Hebergement-paris.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 80d5b98d-69a8-4bda-bbe3-4e98ab3a8751
 	queryGroup: Paramètres
 
@@ -39,7 +39,7 @@ expression CheminFichierHébergement = "C:\Users\MSI\Downloads\Hebergement-paris
 	annotation PBI_ResultType = Text
 
 /// Paramètre permettant de retracer le chemin complet vers le fichier fr_postal_codes.csv.
-expression CheminFichierCodesPostaux = "C:\Users\MSI\Downloads\fr_postal_codes.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression CheminFichierCodesPostaux = "C:\Users\kacem\OneDrive\Documents\TP-BI\Tp 1\fr_postal_codes.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: ee9aa5cd-620c-44ac-9f46-c8575a751237
 	queryGroup: Paramètres
 
