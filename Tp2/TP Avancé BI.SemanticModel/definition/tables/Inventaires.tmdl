@@ -13,7 +13,8 @@ table Inventaires
 		annotation UnderlyingDateTimeDataType = Date
 
 	column NoMagasin
-		dataType: string
+		dataType: int64
+		formatString: 0
 		lineageTag: b5fb03e0-4f3f-47c3-9b2e-cb517a5f0560
 		summarizeBy: none
 		sourceColumn: NoMagasin
@@ -21,14 +22,13 @@ table Inventaires
 		annotation SummarizationSetBy = Automatic
 
 	column NoDept
-		dataType: double
+		dataType: int64
+		formatString: 0
 		lineageTag: b7b9db61-695a-48c6-b5d4-c9e21c8c4e22
 		summarizeBy: none
 		sourceColumn: NoDept
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column 'Catégorie Inventaire'
 		dataType: string
@@ -84,9 +84,10 @@ table Inventaires
 				    #"Type modifié3" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur3",{{"Column1.2.1", type text}, {"Column1.2.2", type number}}),
 				    #"Colonnes supprimées1" = Table.RemoveColumns(#"Type modifié3",{"Column1.2.1", "Premier Caractère", "Index"}),
 				    #"Colonnes permutées1" = Table.ReorderColumns(#"Colonnes supprimées1",{"Date", "Personnalisé", "Column1.1", "Catégorie Inventaire", "Column1.2.2"}),
-				    #"Colonnes renommées2" = Table.RenameColumns(#"Colonnes permutées1",{{"Personnalisé", "NoMagasin"}, {"Column1.1", "NoDept"}, {"Column1.2.2", "Inventaire"}})
+				    #"Colonnes renommées2" = Table.RenameColumns(#"Colonnes permutées1",{{"Personnalisé", "NoMagasin"}, {"Column1.1", "NoDept"}, {"Column1.2.2", "Inventaire"}}),
+				    #"Type modifié4" = Table.TransformColumnTypes(#"Colonnes renommées2",{{"NoMagasin", Int64.Type}, {"NoDept", Int64.Type}})
 				in
-				    #"Colonnes renommées2"
+				    #"Type modifié4"
 
 	annotation PBI_NavigationStepName = Navigation
 
