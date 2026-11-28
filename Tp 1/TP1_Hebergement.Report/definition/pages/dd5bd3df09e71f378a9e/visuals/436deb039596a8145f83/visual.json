@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "436deb039596a8145f83",
   "position": {
-    "x": 65.116419911968592,
-    "y": 25.249224047498029,
+    "x": 32,
+    "y": 24,
     "z": 0,
-    "height": 69.103139498415658,
-    "width": 556.81183557377233,
+    "height": 64,
+    "width": 1200,
     "tabOrder": 0
   },
   "visual": {
@@ -21,8 +21,9 @@
                   {
                     "value": "Recherche d'établissements :",
                     "textStyle": {
-                      "fontSize": "32pt",
-                      "color": "#d64550"
+                      "fontSize": "28pt",
+                      "color": "#1F2933",
+                      "fontFamily": "Geist Serif"
                     }
                   }
                 ]

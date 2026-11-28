@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "9612af070aa0e4552760",
   "position": {
-    "x": 65,
-    "y": 175,
+    "x": 32,
+    "y": 110,
     "z": 0,
-    "height": 387.5,
-    "width": 610,
+    "height": 460,
+    "width": 1100,
     "tabOrder": 0
   },
   "visual": {
@@ -131,5 +131,84 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9a2f4dda2abde4a0068e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Année"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1512528c7a8b91b5ea2a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Regroupement"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e50f1897be8aed5aa994",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "TYPOLOGIE DE L'ÉTABLISSEMENT"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "163aeeffa0eab9642a7c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Nombre de chambre intervalle"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "08216e739330a4517ccf",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Hébergement"
+                  }
+                },
+                "Property": "ADRESSE"
+              }
+            },
+            "Function": 2
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "0370e5c692092c4bdc00",
   "position": {
-    "x": 65,
-    "y": 25,
+    "x": 32,
+    "y": 24,
     "z": 5000,
-    "height": 150,
-    "width": 610,
+    "height": 64,
+    "width": 1200,
     "tabOrder": 5000
   },
   "visual": {
@@ -21,8 +21,9 @@
                   {
                     "value": "Etude des évaluations :",
                     "textStyle": {
-                      "fontSize": "32pt",
-                      "color": "#d64550"
+                      "fontSize": "28pt",
+                      "color": "#1F2933",
+                      "fontFamily": "Geist Serif"
                     }
                   }
                 ]

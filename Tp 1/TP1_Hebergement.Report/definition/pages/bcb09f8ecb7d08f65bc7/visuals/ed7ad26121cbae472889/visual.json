@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "ed7ad26121cbae472889",
   "position": {
-    "x": 120.00006103515625,
-    "y": 496.23664518010673,
+    "x": 32,
+    "y": 618,
     "z": 3000,
-    "height": 331,
-    "width": 152,
+    "height": 430,
+    "width": 300,
     "tabOrder": 3000
   },
   "visual": {
@@ -94,5 +94,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "774d9c35ee9be5f8defd",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Nombre de chambre intervalle"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "dd5bd3df09e71f378a9e",
-  "displayName": "Page 4",
+  "displayName": "Recherche d'établissements",
   "displayOption": "FitToPage",
   "height": 1080,
   "width": 1920,

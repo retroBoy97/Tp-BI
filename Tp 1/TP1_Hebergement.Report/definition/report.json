@@ -9,6 +9,15 @@
         "page": "2.3.1"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "ThemeGeist.json",
+      "reportVersionAtImport": {
+        "visual": "2.14.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -31,7 +40,7 @@
           "expanded": {
             "expr": {
               "Literal": {
-                "Value": "true"
+                "Value": "false"
               }
             }
           }
@@ -79,6 +88,11 @@
           "name": "5_etoiles3637381055460941.png",
           "path": "5_etoiles3637381055460941.png",
           "type": "Image"
+        },
+        {
+          "name": "ThemeGeist.json",
+          "path": "ThemeGeist.json",
+          "type": "CustomTheme"
         }
       ]
     }
