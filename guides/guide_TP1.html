@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide TP1 – Hébergement</title>
+<style>
+  :root{--bg:#F3F1EC;--card:#fff;--ink:#1F2933;--mute:#5B6570;--line:#E4E1DA;--acc:#2B5F8A;--warn:#B5543C;
+        --serif:"Geist Serif",Georgia,serif;--sans:"Geist",system-ui,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans)}
+  main{max-width:980px;margin:0 auto;padding:32px 20px 64px}
+  h1,h2{font-family:var(--serif);font-weight:400;margin:0}
+  h1{font-size:30px} h2{font-size:21px;margin:36px 0 12px} h2 small{font-family:var(--sans);font-size:11px;letter-spacing:.06em;color:#fff;background:var(--acc);border-radius:4px;padding:2px 6px;margin-right:8px;vertical-align:middle}
+  .sub{color:var(--mute);margin:4px 0 0}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:20px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+  .box b{display:block;font-family:var(--serif);font-weight:400;font-size:15px}
+  .arr{color:var(--mute)}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px}
+  th,td{text-align:left;vertical-align:top;padding:7px 12px;border-top:1px solid var(--line)}
+  th{background:#FAF9F6;font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);border-top:0}
+  td:first-child{white-space:nowrap;font-weight:500}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:#EEF1F4;padding:1px 5px;border-radius:4px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+  .q p{margin:0} .q p:first-child{font-weight:600}
+  .q p+p{color:var(--mute)}
+  ul{margin:6px 0;padding-left:20px}
+  .warn td:first-child{color:var(--warn)}
+  .overflow{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+  <h1>TP1 — Hébergements classés (Paris &amp; IDF)</h1>
+  <p class="sub">Ce que contient <em>ton</em> fichier, étape par étape, et comment l'expliquer.</p>
+
+  <div class="flow">
+    <div class="box"><b>Hebergement-paris.csv</b>2 261 établissements</div><span class="arr">→</span>
+    <div class="box"><b>Hébergement temporaire</b>nettoyage (chargement désactivé)</div><span class="arr">→</span>
+    <div class="box"><b>Hébergement</b>fusion + colonnes ajoutées</div><span class="arr">→</span>
+    <div class="box"><b>Rapport</b>4 pages</div>
+  </div>
+  <div class="flow">
+    <div class="box"><b>fr_postal_codes.csv</b>code postal → lat/long</div><span class="arr">→</span>
+    <div class="box"><b>fr_postal_codes</b>nettoyage</div><span class="arr">↗ fusionné dans Hébergement</span>
+  </div>
+
+  <h2><small>TP 1.1</small> 1 · Power Query — « Hébergement temporaire »</h2>
+  <div class="overflow"><table>
+    <tr><th>Étape appliquée</th><th>Ce qu'elle fait → pourquoi</th></tr>
+    <tr><td>Source</td><td>Lit le CSV via le paramètre <code>CheminFichierHébergement</code> (séparateur <code>;</code>, encodage 1252 pour les accents).</td></tr>
+    <tr><td>En-têtes promus</td><td>1re ligne → noms de colonnes.</td></tr>
+    <tr><td>Type modifié (param. régionaux)</td><td>DATE DE CLASSEMENT en date, locale <code>fr-FR</code> (format jj/mm/aaaa).</td></tr>
+    <tr><td>Valeur remplacée ×5</td><td><code>-</code> → vide dans capacité, chambres, emplacements… → sinon la conversion en nombre donne des erreurs. Les vides deviennent <code>null</code>.</td></tr>
+    <tr><td>Fractionner la colonne</td><td>CLASSEMENT « 3 étoiles » coupé sur l'espace → on garde « 3 », on supprime « étoiles », renommé <b>Nombre d'étoile</b> (entier).</td></tr>
+    <tr><td>Personnalisée ajoutée</td><td><b>LOCALISATION</b> = <code>[ADRESSE]&amp;","&amp;Text.From([CODE POSTAL])&amp;","&amp;[COMMUNE]&amp;",France"</code> → adresse complète pour la carte. <code>Text.From</code> convertit le nombre en texte pour pouvoir concaténer.</td></tr>
+    <tr><td>Année insérée</td><td><code>Date.Year</code> de la date de classement → segment Année.</td></tr>
+    <tr><td>Type modifié</td><td>CODE POSTAL en entier → même type que dans fr_postal_codes, nécessaire pour la fusion.</td></tr>
+    <tr><td>Personnalisée ajoutée 1–3</td><td>Colonnes d'URL d'images (chambre, type, étoiles) → affichées pages 3 &amp; 4.</td></tr>
+  </table></div>
+
+  <h2><small>TP 1.1</small> 2 · Power Query — « fr_postal_codes »</h2>
+  <div class="overflow"><table>
+    <tr><th>Étape</th><th>Ce qu'elle fait → pourquoi</th></tr>
+    <tr><td>Source</td><td>Paramètre <code>CheminFichierCodesPostaux</code>, séparateur <code>,</code>.</td></tr>
+    <tr><td>Colonnes supprimées</td><td>On garde seulement Code postal, Latitude, Longitude.</td></tr>
+    <tr><td>Fractionner + supprimer</td><td>« 24001 CEDEX » → on garde « 24001 », renommé <b>Code postal</b>.</td></tr>
+  </table></div>
+
+  <h2><small>TP 1.1</small> 3 · Power Query — « Hébergement » (table finale)</h2>
+  <div class="overflow"><table>
+    <tr><th>Étape</th><th>Ce qu'elle fait → pourquoi</th></tr>
+    <tr><td>Source (fusion)</td><td><i>Combiner → Fusionner les requêtes comme nouvelle</i> : Hébergement temporaire ⟕ fr_postal_codes sur le code postal, <b>jointure externe gauche</b> → on garde tous les hébergements, même sans correspondance.</td></tr>
+    <tr><td>Regroupement</td><td>Colonne conditionnelle : si COMMUNE = « PARIS » → PARIS, sinon « Hors Paris ».</td></tr>
+    <tr><td>Nombre de chambre intervalle</td><td>Conditionnelle : null → N/A, &lt;25 → 0-24, &lt;50 → 25-49 … sinon 150.</td></tr>
+    <tr><td>Ordre Intervalles</td><td>1…8 → utilisé en <b>Trier par colonne</b>, sinon tri alphabétique (« 100-124 » avant « 25-49 »).</td></tr>
+    <tr><td>Début URL + URL Site Internet</td><td>Nettoyage : ajoute <code>http://</code> ou <code>http://www.</code> quand il manque → liens cliquables.</td></tr>
+  </table></div>
+  <p class="sub">Puis <b>Fermer &amp; appliquer</b>. Paramètres et tables temporaires sont rangés dans des groupes (clic droit → Nouveau groupe).</p>
+
+  <h2><small>TP 1.2</small> 4 · Modèle (après Power Query)</h2>
+  <ul>
+    <li><b>Mesure</b> <code>NOMBRE DE CHAMBRES MOYEN = SUM(chambres) / COUNT(ADRESSE)</code>.</li>
+    <li><b>Groupe</b> « NOMBRE DE CHAMBRES (compartiments) » : tranches de 25, créé par <i>… → Nouveau groupe</i>.</li>
+    <li><b>Catégories de données</b> : LOCALISATION = Adresse (pour la carte), URL Site Internet = URL web, Images = URL d'image.</li>
+    <li><b>Trier par colonne</b> : Nombre de chambre intervalle trié par Ordre Intervalles.</li>
+  </ul>
+
+  <h2><small>TP 1.2</small> 5 · Rapport — quoi montrer</h2>
+  <div class="overflow"><table>
+    <tr><th>Page</th><th>Contenu → démo</th></tr>
+    <tr><td>Evaluation des établissements</td><td>4 segments (Année, Regroupement, Typologie, Intervalle), 3 cartes (nb d'évaluations = nombre d'ADRESSE, étoiles, chambres), barres par étoiles + images dans un rectangle, courbe par année, carte (taille des bulles = chambres). <b>Démo :</b> cliquer PARIS puis Hors Paris, bouger le curseur Année.</td></tr>
+    <tr><td>Etude des évaluations</td><td>Histogramme avec hiérarchie Année → Regroupement → Typologie → Intervalle. <b>Démo forage :</b> ↓ activer l'exploration puis cliquer 2012 · ⇊ niveau suivant · ⤓ développer tout · ↑ remonter. Treemap, barres triées décroissant, nuage de points chambres vs étoiles.</td></tr>
+    <tr><td>Recherche d'informations</td><td>« Moteur de recherche » : choisir un NOM COMMERCIAL → adresse, date, chambres, type, carte. Le segment Nom ne filtre pas le segment Année (<i>Format → Modifier les interactions → Aucun</i>).</td></tr>
+    <tr><td>Recherche d'établissements</td><td>Segments + table avec images. <b>Filtre de page</b> qui exclut PARC RÉSIDENTIEL DE LOISIRS (un seul établissement).</td></tr>
+  </table></div>
+
+  <h2>6 · Questions probables du prof</h2>
+  <div class="q"><p>Pourquoi remplacer « - » avant de convertir en nombre ?</p><p>Sinon la conversion échoue (erreur). Vide → null, qui est accepté dans une colonne numérique.</p></div>
+  <div class="q"><p>Pourquoi des paramètres ? <small>(TP 1.2, annexe)</small></p><p>Le chemin des fichiers est centralisé : sur un autre PC on change juste la valeur du paramètre (Gérer les paramètres), pas le code M de chaque requête.</p></div>
+  <div class="q"><p>Pourquoi désactiver le chargement des tables temporaires ?</p><p>Ce sont des étapes intermédiaires : on ne les charge pas dans le modèle pour l'alléger.</p></div>
+  <div class="q"><p>Jointure externe gauche, pourquoi ?</p><p>On garde toutes les lignes de la table de gauche (hébergements), même si le code postal n'existe pas dans la table de droite.</p></div>
+  <div class="q"><p>Mesure ou colonne calculée ?</p><p>Colonne : calculée ligne par ligne et stockée. Mesure : calculée à la volée selon les filtres du rapport (ex. moyenne de chambres).</p></div>
+  <div class="q"><p>Segment vs filtre ?</p><p>Segment = filtre visible sur la page pour l'utilisateur. Volet Filtres = filtre sur un visuel, une page ou tout le rapport (ex. exclure parc résidentiel).</p></div>
+  <div class="q"><p>M ou DAX ?</p><p>M (Power Query) = préparer/nettoyer les données avant chargement (ETL). DAX = calculs dans le modèle (mesures, colonnes calculées).</p></div>
+
+  <h2>7 · Points faibles connus (si on te les signale)</h2>
+  <div class="overflow"><table class="warn">
+    <tr><td>Courbe page 1</td><td>Le segment Année filtre encore la courbe (le TP demande Modifier les interactions → Aucun).</td></tr>
+    <tr><td>Carte page 1</td><td>Pas de saturation de couleur par nombre d'étoiles.</td></tr>
+    <tr><td>Colonnes inutiles</td><td>CATÉGORIE, MENTION, TÉLÉPHONE, COURRIEL, TYPE DE SÉJOUR pas supprimées.</td></tr>
+    <tr><td>Lat/Long</td><td>Fusion faite mais colonne pas développée → la carte utilise LOCALISATION (adresse) à la place.</td></tr>
+    <tr><td>« 150 »</td><td>Devrait être « 150+ ».</td></tr>
+  </table></div>
+</main>
+</body>
+</html>
