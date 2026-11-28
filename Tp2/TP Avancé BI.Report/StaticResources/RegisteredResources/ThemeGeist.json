@@ -1,0 +1,234 @@
+{
+  "name": "ThemeGeist",
+  "dataColors": [
+    "#2B5F8A",
+    "#D9734E",
+    "#4F8F7A",
+    "#E3B448",
+    "#7A5C99",
+    "#C44D58",
+    "#5FA3C7",
+    "#8C8C7A"
+  ],
+  "foreground": "#1F2933",
+  "foregroundNeutralSecondary": "#5B6570",
+  "foregroundNeutralTertiary": "#8A929B",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F7F6F2",
+  "backgroundNeutral": "#E4E1DA",
+  "tableAccent": "#2B5F8A",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Geist",
+      "fontSize": 30,
+      "color": "#1F2933"
+    },
+    "title": {
+      "fontFace": "Geist Serif",
+      "fontSize": 13,
+      "color": "#1F2933"
+    },
+    "header": {
+      "fontFace": "Geist Serif",
+      "fontSize": 12,
+      "color": "#1F2933"
+    },
+    "label": {
+      "fontFace": "Geist",
+      "fontSize": 10,
+      "color": "#3E4852"
+    },
+    "largeTitle": {
+      "fontFace": "Geist Serif",
+      "fontSize": 20,
+      "color": "#1F2933"
+    },
+    "semiboldLabel": {
+      "fontFace": "Geist",
+      "fontSize": 10
+    },
+    "largeLabel": {
+      "fontFace": "Geist",
+      "fontSize": 12
+    },
+    "smallLabel": {
+      "fontFace": "Geist",
+      "fontSize": 9
+    },
+    "lightLabel": {
+      "fontFace": "Geist",
+      "fontSize": 10
+    },
+    "boldLabel": {
+      "fontFace": "Geist",
+      "fontSize": 10
+    },
+    "largeLightLabel": {
+      "fontFace": "Geist",
+      "fontSize": 12
+    },
+    "smallLightLabel": {
+      "fontFace": "Geist",
+      "fontSize": 9
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "fontFamily": "Geist Serif",
+            "fontSize": 13,
+            "fontColor": {
+              "solid": {
+                "color": "#1F2933"
+              }
+            },
+            "bold": false
+          }
+        ],
+        "subTitle": [
+          {
+            "fontFamily": "Geist",
+            "fontSize": 10,
+            "fontColor": {
+              "solid": {
+                "color": "#5B6570"
+              }
+            }
+          }
+        ],
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E4E1DA"
+              }
+            },
+            "radius": 10,
+            "width": 1
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "top": 12,
+            "bottom": 12,
+            "left": 14,
+            "right": 14
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F1EC"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F1EC"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        ]
+      }
+    },
+    "image": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [
+          {
+            "fontFamily": "Geist Serif",
+            "textSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#1F2933"
+              }
+            }
+          }
+        ],
+        "items": [
+          {
+            "fontFamily": "Geist",
+            "textSize": 10,
+            "fontColor": {
+              "solid": {
+                "color": "#3E4852"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

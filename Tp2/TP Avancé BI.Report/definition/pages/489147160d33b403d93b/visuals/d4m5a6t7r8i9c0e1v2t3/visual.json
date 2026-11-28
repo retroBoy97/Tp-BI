@@ -1,0 +1,205 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "d4m5a6t7r8i9c0e1v2t3",
+  "position": {
+    "x": 32,
+    "y": 230,
+    "z": 3000,
+    "height": 818,
+    "width": 1856,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimDept1"
+                    }
+                  },
+                  "Property": "Nom du département"
+                }
+              },
+              "queryRef": "DimDept1.Nom du département",
+              "nativeQueryRef": "Nom du département",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "VentesBrutes$"
+                }
+              },
+              "queryRef": "Ventes.VentesBrutes$",
+              "nativeQueryRef": "VentesBrutes$"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "VentesBrutes$AnPrec"
+                }
+              },
+              "queryRef": "Ventes.VentesBrutes$AnPrec",
+              "nativeQueryRef": "VentesBrutes$AnPrec"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "Écart$VentesBrutesAnPrec"
+                }
+              },
+              "queryRef": "Ventes.Écart$VentesBrutesAnPrec",
+              "nativeQueryRef": "Écart$VentesBrutesAnPrec"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "Écart%VentesBrutes$AnPrec"
+                }
+              },
+              "queryRef": "Ventes.Écart%VentesBrutes$AnPrec",
+              "nativeQueryRef": "Écart%VentesBrutes$AnPrec"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "VentesBrutes$YTD"
+                }
+              },
+              "queryRef": "Ventes.VentesBrutes$YTD",
+              "nativeQueryRef": "VentesBrutes$YTD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "NbTransactions"
+                }
+              },
+              "queryRef": "Ventes.NbTransactions",
+              "nativeQueryRef": "NbTransactions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "NbTransactionsAnPrec"
+                }
+              },
+              "queryRef": "Ventes.NbTransactionsAnPrec",
+              "nativeQueryRef": "NbTransactionsAnPrec"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "ÉcartNbTransactionsAnPrec"
+                }
+              },
+              "queryRef": "Ventes.ÉcartNbTransactionsAnPrec",
+              "nativeQueryRef": "ÉcartNbTransactionsAnPrec"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "Écart%NbTransactionsAnPrec"
+                }
+              },
+              "queryRef": "Ventes.Écart%NbTransactionsAnPrec",
+              "nativeQueryRef": "Écart%NbTransactionsAnPrec"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "NbTransactionsYTD"
+                }
+              },
+              "queryRef": "Ventes.NbTransactionsYTD",
+              "nativeQueryRef": "NbTransactionsYTD"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ventes et transactions par département'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
