@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide TP2 – Ventes Meubles</title>
+<style>
+  :root{--bg:#F3F1EC;--card:#fff;--ink:#1F2933;--mute:#5B6570;--line:#E4E1DA;--acc:#2B5F8A;--warn:#B5543C;
+        --serif:"Geist Serif",Georgia,serif;--sans:"Geist",system-ui,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans)}
+  main{max-width:1000px;margin:0 auto;padding:32px 20px 64px}
+  h1,h2{font-family:var(--serif);font-weight:400;margin:0}
+  h1{font-size:30px} h2{font-size:21px;margin:36px 0 12px}
+  h2 small{font-family:var(--sans);font-size:11px;letter-spacing:.06em;color:#fff;background:var(--acc);border-radius:4px;padding:2px 6px;margin-right:8px;vertical-align:middle}
+  .sub{color:var(--mute);margin:4px 0 0}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+  .box b{display:block;font-family:var(--serif);font-weight:400;font-size:15px}
+  .arr{color:var(--mute)}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:14px}
+  th,td{text-align:left;vertical-align:top;padding:7px 12px;border-top:1px solid var(--line)}
+  th{background:#FAF9F6;font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);border-top:0}
+  td:first-child{font-weight:500}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:#EEF1F4;padding:1px 5px;border-radius:4px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+  .q p{margin:0} .q p:first-child{font-weight:600}
+  .q p+p{color:var(--mute)}
+  ul{margin:6px 0;padding-left:20px}
+  .warn td:first-child{color:var(--warn)}
+  .overflow{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+  <h1>TP2 — Ventes Meubles transcanadiens (2013–2015)</h1>
+  <p class="sub">Niveau avancé, jusqu'à la page 40 (+ la page « Tableau de bord » des pages 41–42). Basé sur ton fichier réel.</p>
+
+  <div class="flow">
+    <div class="box"><b>Dossier Ventes</b>36 fichiers Excel (1 par mois)</div><span class="arr">→</span>
+    <div class="box"><b>Ventes</b>table de faits</div>
+  </div>
+  <div class="flow">
+    <div class="box"><b>Dim*.xlsx</b>produits, magasins, depts…</div><span class="arr">→</span>
+    <div class="box"><b>DimProduit1, DimMagasin1…</b>dimensions</div>
+  </div>
+  <div class="flow">
+    <div class="box"><b>Inventaires.txt</b>rapport texte « sale »</div><span class="arr">→</span>
+    <div class="box"><b>Inventaires</b>2e table de faits</div>
+  </div>
+  <div class="flow">
+    <div class="box"><b>DateDébut / DateFin</b>paramètres</div><span class="arr">→</span>
+    <div class="box"><b>NbJours</b>1 095 jours</div><span class="arr">→</span>
+    <div class="box"><b>DimDates</b>calendrier généré en M</div>
+  </div>
+
+  <h2><small>p. 8–13</small> 1 · Paramètres</h2>
+  <div class="overflow"><table>
+    <tr><th>Paramètre</th><th>Rôle</th></tr>
+    <tr><td>CheminDossierVentes</td><td>Chemin du dossier des 36 fichiers de ventes.</td></tr>
+    <tr><td>CheminDossierFichiersSources</td><td>Chemin du dossier des Dim et de l'inventaire. <b>Paramètre combiné</b> : chaque requête fait <code>CheminDossierFichiersSources &amp; "\DimProduit.xlsx"</code>.</td></tr>
+    <tr><td>DateDébut, DateFin</td><td>2013-01-01 et 2015-12-31 → bornes de la table de dates.</td></tr>
+    <tr><td>NbJours</td><td><code>Duration.Days(DateFin - DateDébut) + 1</code> = nombre de jours du calendrier.</td></tr>
+  </table></div>
+
+  <h2><small>p. 8–13</small> 2 · Ventes — importer un dossier</h2>
+  <div class="overflow"><table>
+    <tr><th>Étape</th><th>Ce qu'elle fait → pourquoi</th></tr>
+    <tr><td>Source</td><td><code>Folder.Files(CheminDossierVentes)</code> : liste tous les fichiers du dossier.</td></tr>
+    <tr><td>Fichiers masqués filtrés</td><td>Ignore les fichiers cachés (ex. Thumbs.db).</td></tr>
+    <tr><td>Appeler une fonction personnalisée</td><td>Applique la fonction <b>Transformer le fichier</b> à chaque fichier : elle ouvre le classeur et prend <code>Table1</code>.</td></tr>
+    <tr><td>Colonne de tables développée</td><td>Empile les 36 tables en une seule.</td></tr>
+    <tr><td>Type modifié / Colonnes supprimées</td><td>Types (entiers, date, décimal) ; suppression de Source.Name (nom du fichier).</td></tr>
+  </table></div>
+  <p class="sub">Les requêtes d'assistance (<i>Exemple de fichier</i>, <i>Paramètre1</i>, <i>Transformer l'exemple de fichier</i>) sont créées automatiquement par <b>Combiner les fichiers</b> : on transforme un fichier exemple, et la même transformation s'applique à tous.</p>
+
+  <h2><small>p. 13</small> 3 · Tables Dim</h2>
+  <p>Chaque Dim : <code>Excel.Workbook(File.Contents(CheminDossierFichiersSources &amp; "\DimX.xlsx"))</code> → on prend le tableau → types. Toutes importées sauf <b>DimDatesFiscal</b> (elle sert plus tard, p. 73).</p>
+
+  <h2><small>p. 14–26</small> 4 · Inventaires — le fichier texte complexe</h2>
+  <p class="sub">Le fichier est un rapport imprimé : en-têtes, totaux, lignes vides, magasin écrit une seule fois au-dessus de ses lignes. Il faut reconstruire un vrai tableau.</p>
+  <div class="overflow"><table>
+    <tr><th>Étape</th><th>Ce qu'elle fait → pourquoi</th></tr>
+    <tr><td>Source</td><td><code>Lines.FromBinary(...Inventaires.txt)</code> : une ligne du fichier = une ligne de la table (1 colonne).</td></tr>
+    <tr><td>Espaces supprimés</td><td><code>Text.Trim</code> enlève les espaces au début/fin.</td></tr>
+    <tr><td>Index + colonne conditionnelle</td><td>Si Index = 2 → garder la ligne « Pour la période fiscale : 15/12 ». Puis <b>remplissage vers le bas</b> pour l'avoir sur toutes les lignes.</td></tr>
+    <tr><td>Fractionner par « : » puis « / »</td><td>« 15/12 » → 15 (année) et 12 (mois). Colonne personnalisée = 1 (jour).</td></tr>
+    <tr><td>Colonnes fusionnées</td><td>« 15-12-1 » → converti en date → <b>Fin du mois</b> → 2015-12-31. Renommé <b>Date</b>.</td></tr>
+    <tr><td>Catégorie Inventaire</td><td>Conditionnelle : si la ligne commence par « Items », « Commandes » ou « Autres » → c'est la catégorie. Remplissage vers le bas.</td></tr>
+    <tr><td>NoMagasin</td><td>Si la ligne commence par « Magasin : » → le numéro (ex. 103). Remplissage vers le bas.</td></tr>
+    <tr><td>Premier caractère + filtre</td><td>Supprime les lignes vides.</td></tr>
+    <tr><td>Fractionner au 1er espace</td><td>« 10 Lits 285,246.375 » → <b>NoDept</b> (10) + reste. En nombre : les lignes de texte deviennent des erreurs → <b>Erreurs supprimées</b>. Filtre NoDept ≠ 0.</td></tr>
+    <tr><td>Fractionner au dernier espace</td><td>Reste → description + <b>Inventaire</b> (montant).</td></tr>
+    <tr><td>Renommer / types</td><td>NoMagasin, NoDept en entiers (même type que les clés des dimensions, pour les relations).</td></tr>
+  </table></div>
+
+  <h2><small>p. 27–32</small> 5 · Table de dates DimDates</h2>
+  <div class="overflow"><table>
+    <tr><th>Étape</th><th>Ce qu'elle fait</th></tr>
+    <tr><td>Source</td><td><code>List.Dates(DateDébut, NbJours, #duration(1,0,0,0))</code> : liste de 1 095 dates, pas de 1 jour (1 jour, 0 h, 0 min, 0 s).</td></tr>
+    <tr><td>Convertir en table</td><td>Liste → table, colonne renommée <b>Date</b>, type date.</td></tr>
+    <tr><td>Colonnes ajoutées</td><td>Année, Mois, Nom du mois (<code>"fr-FR"</code> pour avoir janvier, février…), Semaine de l'année. Nom du mois <b>trié par</b> Mois.</td></tr>
+  </table></div>
+  <p class="sub">Pourquoi : les fonctions de temps DAX (DATEADD, DATESYTD) ont besoin d'un calendrier continu, sans jour manquant.</p>
+
+  <h2><small>p. 35–37</small> 6 · Modèle de données</h2>
+  <p>Schéma en <b>étoile</b> avec <b>deux tables de faits</b> (Ventes, Inventaires) et des dimensions. Relations <b>plusieurs → un</b> (* → 1) : le filtre va de la dimension vers les faits.</p>
+  <ul>
+    <li>Ventes → DimDates (Date), DimMagasin1 (No magasin), DimProduit1 (No produit)</li>
+    <li>Inventaires → DimDates (Date), DimMagasin1 (NoMagasin), DimDept1 (NoDept)</li>
+    <li>DimMagasin1 → DimBannière1, DimCatégorie1 · DimProduit1 → DimDept1, DimFournisseur1</li>
+  </ul>
+  <p class="sub">Vue Modèle = 3e icône à gauche. Gérer les relations : onglet Modeling → Manage relationships.</p>
+
+  <h2><small>p. 39</small> 7 · Les 10 mesures DAX (table Ventes)</h2>
+  <div class="overflow"><table>
+    <tr><th>Mesure</th><th>Formule → explication</th></tr>
+    <tr><td>VentesBrutes$</td><td><code>SUMX(Ventes, RELATED(DimProduit1[Prix unitaire]) * Ventes[Unités vendues])</code><br>Ventes n'a pas de prix. <b>SUMX</b> parcourt chaque ligne, <b>RELATED</b> va chercher le prix dans DimProduit via la relation, multiplie, puis additionne. Pas besoin de colonne calculée.</td></tr>
+    <tr><td>VentesBrutes$AnPrec</td><td><code>CALCULATE([VentesBrutes$], DATEADD(DimDates[Date], -1, YEAR))</code><br><b>CALCULATE</b> change le filtre ; <b>DATEADD</b> décale les dates d'un an en arrière.</td></tr>
+    <tr><td>VentesBrutes$YTD</td><td><code>CALCULATE([VentesBrutes$], DATESYTD(DimDates[Date]))</code><br>Cumul depuis le 1er janvier jusqu'à la dernière date du contexte.</td></tr>
+    <tr><td>NbTransactions</td><td><code>COUNTROWS(Ventes)</code> : 1 ligne = 1 transaction.</td></tr>
+    <tr><td>NbTransactionsAnPrec / YTD</td><td>Même logique que les ventes, sur NbTransactions.</td></tr>
+    <tr><td>Écart$VentesBrutesAnPrec</td><td><code>[VentesBrutes$] - [VentesBrutes$AnPrec]</code></td></tr>
+    <tr><td>ÉcartNbTransactionsAnPrec</td><td><code>[NbTransactions] - [NbTransactionsAnPrec]</code></td></tr>
+    <tr><td>Écart% (×2)</td><td><code>DIVIDE([Écart…], [AnPrec], 1)</code><br><b>DIVIDE</b> évite l'erreur de division par zéro ; s'il n'y a pas d'année précédente, il renvoie 1 (= 100 %).</td></tr>
+  </table></div>
+  <p class="sub">Les colonnes d'origine de Ventes sont masquées : on n'expose que les mesures.</p>
+
+  <h2><small>p. 41–42</small> 8 · Page « Tableau de bord » — démo</h2>
+  <div class="overflow"><table>
+    <tr><th>Action</th><th>Résultat attendu (ligne Total)</th></tr>
+    <tr><td>2014 + janvier</td><td>VentesBrutes$ <b>70 797 919</b> · AnPrec <b>117 698 709</b> (= janvier 2013) · Écart$ <b>-46 900 790</b> · NbTransactions <b>33 128</b> · YTD = 70 797 919</td></tr>
+    <tr><td>2014 + février</td><td>VentesBrutes$YTD <b>150 802 875</b> (= janvier + février) → le YTD cumule bien.</td></tr>
+    <tr><td>2013</td><td>AnPrec vide (pas de 2012), Écart% = 100 % (le 1 de DIVIDE).</td></tr>
+    <tr><td>Aucun filtre</td><td>YTD = seulement 2015 : DATESYTD prend la dernière année du contexte.</td></tr>
+  </table></div>
+
+  <h2>9 · Questions probables du prof</h2>
+  <div class="q"><p>Pourquoi importer un dossier plutôt que 36 fichiers ?</p><p>Les fichiers ont la même structure : une seule requête les combine. Si on ajoute un nouveau mois dans le dossier, il est pris automatiquement à l'actualisation.</p></div>
+  <div class="q"><p>C'est quoi un paramètre combiné ?</p><p>Un paramètre (le dossier) concaténé avec du texte (le nom du fichier). On change le dossier une fois pour toutes les requêtes.</p></div>
+  <div class="q"><p>Pourquoi créer sa propre table de dates ?</p><p>Les fonctions d'intelligence temporelle ont besoin d'un calendrier continu. Les ventes n'ont pas forcément une vente chaque jour.</p></div>
+  <div class="q"><p>SUM ou SUMX ?</p><p>SUM additionne une colonne. SUMX calcule une expression ligne par ligne (prix × unités) puis additionne. Nécessaire ici car le prix est dans une autre table.</p></div>
+  <div class="q"><p>Que fait CALCULATE ?</p><p>Il évalue une mesure dans un contexte de filtre modifié (ex. l'année précédente avec DATEADD).</p></div>
+  <div class="q"><p>Pourquoi DIVIDE et pas « / » ?</p><p>DIVIDE gère la division par zéro ou par vide sans erreur et renvoie une valeur alternative (ici 1).</p></div>
+  <div class="q"><p>Table de faits / dimension ?</p><p>Faits = événements chiffrés (ventes, inventaire), beaucoup de lignes. Dimensions = descriptions (produit, magasin, date) qui servent à filtrer et regrouper.</p></div>
+  <div class="q"><p>Ton Écart% (-39,8 %) ne correspond pas au 60,15 % de l'énoncé ?</p><p>Ma mesure applique la formule de la page 39 : Écart / AnPrec = -46,9 M / 117,7 M = -39,8 %. Le 60,15 % de la capture est Ventes / AnPrec, un autre calcul.</p></div>
+
+  <h2>10 · Points faibles connus</h2>
+  <div class="overflow"><table class="warn">
+    <tr><td>Noms des tables</td><td>DimBannière1, DimProduit1… (suffixe « 1 ») au lieu de DimBannières, DimProduits de l'énoncé.</td></tr>
+    <tr><td>NbJours</td><td>Encore chargée comme table : à désactiver (clic droit → décocher Activer le chargement).</td></tr>
+    <tr><td>Après la page 42</td><td>Non fait (le prof a dit que ce n'était pas nécessaire).</td></tr>
+  </table></div>
+</main>
+</body>
+</html>

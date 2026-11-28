@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "436deb039596a8145f83",
+  "position": {
+    "x": 32,
+    "y": 24,
+    "z": 0,
+    "height": 64,
+    "width": 1200,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Recherche d'établissements :",
+                    "textStyle": {
+                      "fontSize": "28pt",
+                      "color": "#1F2933",
+                      "fontFamily": "Geist Serif"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

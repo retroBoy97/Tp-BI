@@ -1,0 +1,95 @@
+table Inventaires
+	lineageTag: e6cc4f6a-12ef-4dd7-98a8-523fd77f2d49
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e3128a6b-06a0-4509-b4d0-5ad807538267
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column NoMagasin
+		dataType: int64
+		formatString: 0
+		lineageTag: b5fb03e0-4f3f-47c3-9b2e-cb517a5f0560
+		summarizeBy: none
+		sourceColumn: NoMagasin
+
+		annotation SummarizationSetBy = Automatic
+
+	column NoDept
+		dataType: int64
+		formatString: 0
+		lineageTag: b7b9db61-695a-48c6-b5d4-c9e21c8c4e22
+		summarizeBy: none
+		sourceColumn: NoDept
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Catégorie Inventaire'
+		dataType: string
+		lineageTag: 3dbdbf97-07a3-49fc-8673-aa57f53916b2
+		summarizeBy: none
+		sourceColumn: Catégorie Inventaire
+
+		annotation SummarizationSetBy = Automatic
+
+	column Inventaire
+		dataType: double
+		lineageTag: d22d83da-f499-4c4a-88a1-23b869fb961d
+		summarizeBy: sum
+		sourceColumn: Inventaire
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Inventaires = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromColumns({Lines.FromBinary(File.Contents(CheminDossierFichiersSources &"\Inventaires.txt"), null, null, 1252)}),
+				    #"Espaces supprimés" = Table.TransformColumns(Source,{{"Column1", Text.Trim, type text}}),
+				    #"Index ajouté" = Table.AddIndexColumn(#"Espaces supprimés", "Index", 0, 1, Int64.Type),
+				    #"Colonne conditionnelle ajoutée" = Table.AddColumn(#"Index ajouté", "Personnalisé", each if [Index] = 2 then [Column1] else null),
+				    #"Rempli vers le bas" = Table.FillDown(#"Colonne conditionnelle ajoutée",{"Personnalisé"}),
+				    #"Lignes filtrées" = Table.SelectRows(#"Rempli vers le bas", each [Personnalisé] <> null and [Personnalisé] <> ""),
+				    #"Personnalisée ajoutée" = Table.AddColumn(#"Lignes filtrées", "Personnalisé.1", each 1),
+				    #"Fractionner la colonne par délimiteur" = Table.SplitColumn(#"Personnalisée ajoutée", "Personnalisé", Splitter.SplitTextByDelimiter(":", QuoteStyle.Csv), {"Personnalisé.1.1", "Personnalisé.2"}),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur",{{"Personnalisé.1.1", type text}, {"Personnalisé.2", type text}}),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Type modifié",{"Personnalisé.1.1"}),
+				    #"Fractionner la colonne par délimiteur1" = Table.SplitColumn(#"Colonnes supprimées", "Personnalisé.2", Splitter.SplitTextByDelimiter("/", QuoteStyle.Csv), {"Personnalisé.2.1", "Personnalisé.2.2"}),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur1",{{"Personnalisé.2.1", Int64.Type}, {"Personnalisé.2.2", Int64.Type}}),
+				    #"Colonnes fusionnées" = Table.CombineColumns(Table.TransformColumnTypes(#"Type modifié1", {{"Personnalisé.2.1", type text}, {"Personnalisé.2.2", type text}, {"Personnalisé.1", type text}}, "en-US"),{"Personnalisé.2.1", "Personnalisé.2.2", "Personnalisé.1"},Combiner.CombineTextByDelimiter("-", QuoteStyle.None),"Fusionné"),
+				    #"Type modifié avec paramètres régionaux" = Table.TransformColumnTypes(#"Colonnes fusionnées", {{"Fusionné", type date}}, "en-CA"),
+				    #"Fin du mois calculée" = Table.TransformColumns(#"Type modifié avec paramètres régionaux",{{"Fusionné", Date.EndOfMonth, type date}}),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Fin du mois calculée",{{"Fusionné", "Date"}}),
+				    #"Colonne conditionnelle ajoutée1" = Table.AddColumn(#"Colonnes renommées", "NumMagasin", each if Text.StartsWith([Column1], "Items") then [Column1] else if Text.StartsWith([Column1], "Commandes") then [Column1] else if Text.StartsWith([Column1], "Autres") then [Column1] else null),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Colonne conditionnelle ajoutée1",{{"NumMagasin", "Catégorie Inventaire"}}),
+				    #"Personnalisée ajoutée1" = Table.AddColumn(#"Colonnes renommées1", "Personnalisé", each if Text.StartsWith(Text.Trim([Column1]), "Magasin : ") then Text.BeforeDelimiter(Text.AfterDelimiter(Text.Trim([Column1]), "Magasin : "), " ") else null),
+				    #"Rempli vers le bas1" = Table.FillDown(#"Personnalisée ajoutée1",{"Catégorie Inventaire", "Personnalisé"}),
+				    #"Espaces supprimés1" = Table.TransformColumns(#"Rempli vers le bas1",{{"Column1", Text.Trim, type text}}),
+				    #"Personnalisée ajoutée2" = Table.AddColumn(#"Espaces supprimés1", "Premier Caractère", each Text.Start([Column1], 1)),
+				    #"Colonnes permutées" = Table.ReorderColumns(#"Personnalisée ajoutée2",{"Column1", "Premier Caractère", "Index", "Date", "Catégorie Inventaire", "Personnalisé"}),
+				    #"Lignes filtrées1" = Table.SelectRows(#"Colonnes permutées", each [Premier Caractère] <> null and [Premier Caractère] <> ""),
+				    #"Fractionner la colonne par délimiteur2" = Table.SplitColumn(#"Lignes filtrées1", "Column1", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"Column1.1", "Column1.2"}),
+				    #"Type modifié2" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur2",{{"Column1.1", type number}, {"Column1.2", type text}}),
+				    #"Erreurs supprimées" = Table.RemoveRowsWithErrors(#"Type modifié2", {"Column1.1"}),
+				    #"Lignes filtrées2" = Table.SelectRows(#"Erreurs supprimées", each ([Column1.1] <> 0)),
+				    #"Fractionner la colonne par délimiteur3" = Table.SplitColumn(#"Lignes filtrées2", "Column1.2", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, true), {"Column1.2.1", "Column1.2.2"}),
+				    #"Type modifié3" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur3",{{"Column1.2.1", type text}, {"Column1.2.2", type number}}),
+				    #"Colonnes supprimées1" = Table.RemoveColumns(#"Type modifié3",{"Column1.2.1", "Premier Caractère", "Index"}),
+				    #"Colonnes permutées1" = Table.ReorderColumns(#"Colonnes supprimées1",{"Date", "Personnalisé", "Column1.1", "Catégorie Inventaire", "Column1.2.2"}),
+				    #"Colonnes renommées2" = Table.RenameColumns(#"Colonnes permutées1",{{"Personnalisé", "NoMagasin"}, {"Column1.1", "NoDept"}, {"Column1.2.2", "Inventaire"}}),
+				    #"Type modifié4" = Table.TransformColumnTypes(#"Colonnes renommées2",{{"NoMagasin", Int64.Type}, {"NoDept", Int64.Type}})
+				in
+				    #"Type modifié4"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,214 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "9612af070aa0e4552760",
+  "position": {
+    "x": 32,
+    "y": 110,
+    "z": 0,
+    "height": 460,
+    "width": 1100,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Année"
+                }
+              },
+              "queryRef": "Hébergement.Année",
+              "nativeQueryRef": "Année",
+              "active": false
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Regroupement"
+                }
+              },
+              "queryRef": "Hébergement.Regroupement",
+              "nativeQueryRef": "Regroupement",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "TYPOLOGIE DE L'ÉTABLISSEMENT"
+                }
+              },
+              "queryRef": "Hébergement.TYPOLOGIE DE L'ÉTABLISSEMENT",
+              "nativeQueryRef": "TYPOLOGIE DE L'ÉTABLISSEMENT",
+              "active": false
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Nombre de chambre intervalle"
+                }
+              },
+              "queryRef": "Hébergement.Nombre de chambre intervalle",
+              "nativeQueryRef": "Nombre de chambre intervalle",
+              "active": false
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Hébergement"
+                        }
+                      },
+                      "Property": "ADRESSE"
+                    }
+                  },
+                  "Function": 2
+                }
+              },
+              "queryRef": "CountNonNull(Hébergement.ADRESSE)",
+              "nativeQueryRef": "Nombre de ADRESSE1"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Nombre d''évaluation par Année'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9a2f4dda2abde4a0068e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Année"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1512528c7a8b91b5ea2a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Regroupement"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e50f1897be8aed5aa994",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "TYPOLOGIE DE L'ÉTABLISSEMENT"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "163aeeffa0eab9642a7c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Nombre de chambre intervalle"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "08216e739330a4517ccf",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Hébergement"
+                  }
+                },
+                "Property": "ADRESSE"
+              }
+            },
+            "Function": 2
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

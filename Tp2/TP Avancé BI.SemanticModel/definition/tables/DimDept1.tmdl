@@ -1,0 +1,34 @@
+table DimDept1
+	lineageTag: 588b7c2b-9081-41f1-a973-60e529695943
+
+	column 'Numéro de département'
+		dataType: int64
+		formatString: 0
+		lineageTag: 558f3895-05d0-4b67-9569-c2152136f929
+		summarizeBy: none
+		sourceColumn: Numéro de département
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nom du département'
+		dataType: string
+		lineageTag: 6523d501-75d1-4177-9ca1-21c27ed45f0e
+		summarizeBy: none
+		sourceColumn: Nom du département
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDept1 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(CheminDossierFichiersSources &"\DimDept.xlsx"), null, true),
+				    DimDept_Table = Source{[Item="DimDept",Kind="Table"]}[Data],
+				    #"Type modifié" = Table.TransformColumnTypes(DimDept_Table,{{"Numéro de département", Int64.Type}, {"Nom du département", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

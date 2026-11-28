@@ -1,0 +1,356 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "e387c8893d6aad93a45b",
+  "position": {
+    "x": 348,
+    "y": 362,
+    "z": 7000,
+    "height": 686,
+    "width": 1540,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "NOM COMMERCIAL"
+                }
+              },
+              "queryRef": "Hébergement.NOM COMMERCIAL",
+              "nativeQueryRef": "NOM COMMERCIAL"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Image étoiles "
+                }
+              },
+              "queryRef": "Hébergement.Image étoiles ",
+              "nativeQueryRef": "Image étoiles "
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Nombre d'étoile"
+                }
+              },
+              "queryRef": "Sum(Hébergement.Nombre d'étoile)",
+              "nativeQueryRef": "Nombre d'étoile"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Image Chambres"
+                }
+              },
+              "queryRef": "Hébergement.Image Chambres",
+              "nativeQueryRef": "Image Chambres"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "NOMBRE DE CHAMBRES"
+                }
+              },
+              "queryRef": "Sum(Hébergement.NOMBRE DE CHAMBRES)",
+              "nativeQueryRef": "NOMBRE DE CHAMBRES"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Image Type"
+                }
+              },
+              "queryRef": "Hébergement.Image Type",
+              "nativeQueryRef": "Image Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "TYPOLOGIE DE L'ÉTABLISSEMENT"
+                }
+              },
+              "queryRef": "Hébergement.TYPOLOGIE DE L'ÉTABLISSEMENT",
+              "nativeQueryRef": "TYPOLOGIE DE L'ÉTABLISSEMENT"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "Regroupement"
+                }
+              },
+              "queryRef": "Hébergement.Regroupement",
+              "nativeQueryRef": "Regroupement"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hébergement"
+                    }
+                  },
+                  "Property": "URL Site Internet"
+                }
+              },
+              "queryRef": "Hébergement.URL Site Internet",
+              "nativeQueryRef": "URL Site Internet"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Hébergement"
+                  }
+                },
+                "Property": "URL Site Internet"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Hébergement.Nombre d'étoile)"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Hébergement.NOMBRE DE CHAMBRES)"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Hébergement.Regroupement"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d11e7dc5696888293583",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "NOM COMMERCIAL"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "ac093a0b84f0531dfe39",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Image étoiles "
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "1cb75781c565e8f59e76",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Image Chambres"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b4f72da194432bffa62c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Image Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "c537aee32abde8cb419e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Nombre d'étoile"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d5beccd5b2e4c93b7b7c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "NOMBRE DE CHAMBRES"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f4e657a43e7524e2e7ac",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "TYPOLOGIE DE L'ÉTABLISSEMENT"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "8abdbc32923e89dbb807",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "Regroupement"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "7126fd0d70cc7a0a9b10",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Hébergement"
+              }
+            },
+            "Property": "URL Site Internet"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

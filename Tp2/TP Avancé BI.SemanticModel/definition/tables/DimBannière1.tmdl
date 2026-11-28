@@ -1,0 +1,34 @@
+table DimBannière1
+	lineageTag: b549f924-a35a-44c7-8cb5-76a5baaaea87
+
+	column 'Numéro de la bannière'
+		dataType: int64
+		formatString: 0
+		lineageTag: 37396169-7cf8-44e2-ae97-adfc1fb4b9b6
+		summarizeBy: none
+		sourceColumn: Numéro de la bannière
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nom de la bannière'
+		dataType: string
+		lineageTag: 9d89be72-3454-4126-8e13-d2b1328dcd82
+		summarizeBy: none
+		sourceColumn: Nom de la bannière
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimBannière1 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(CheminDossierFichiersSources &"\DimBanniere.xlsx"), null, true),
+				    DimBannière_Table = Source{[Item="DimBannière",Kind="Table"]}[Data],
+				    #"Type modifié" = Table.TransformColumnTypes(DimBannière_Table,{{"Numéro de la bannière", Int64.Type}, {"Nom de la bannière", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

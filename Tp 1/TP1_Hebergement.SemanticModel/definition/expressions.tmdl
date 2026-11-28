@@ -1,0 +1,49 @@
+expression 'Hébergement temporaire' =
+		let
+		    Source = Csv.Document(File.Contents(CheminFichierHébergement),[Delimiter=";", Columns=19, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"En-têtes promus" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Type modifié avec paramètres régionaux" = Table.TransformColumnTypes(#"En-têtes promus", {{"DATE DE CLASSEMENT", type date}}, "fr-FR"),
+		    #"Type modifié4" = Table.TransformColumnTypes(#"Type modifié avec paramètres régionaux",{{"DATE DE CLASSEMENT", type date}}),
+		    #"Valeur remplacée" = Table.ReplaceValue(#"Type modifié4","-","",Replacer.ReplaceText,{"CAPACITÉ D'ACCUEIL (PERSONNES)"}),
+		    #"Valeur remplacée1" = Table.ReplaceValue(#"Valeur remplacée","-","",Replacer.ReplaceText,{"NOMBRE DE CHAMBRES"}),
+		    #"Valeur remplacée2" = Table.ReplaceValue(#"Valeur remplacée1","-","",Replacer.ReplaceText,{"NOMBRE D'EMPLACEMENTS"}),
+		    #"Valeur remplacée3" = Table.ReplaceValue(#"Valeur remplacée2","-","",Replacer.ReplaceText,{"NOMBRE D'UNITÉS D'HABITATION"}),
+		    #"Valeur remplacée4" = Table.ReplaceValue(#"Valeur remplacée3","-","",Replacer.ReplaceText,{"NOMBRE DE LOGEMENTS"}),
+		    #"Type modifié1" = Table.TransformColumnTypes(#"Valeur remplacée4",{{"NOMBRE DE LOGEMENTS", Int64.Type}}),
+		    #"Fractionner la colonne par délimiteur" = Table.SplitColumn(#"Type modifié1", "CLASSEMENT", Splitter.SplitTextByDelimiter(" ", QuoteStyle.Csv), {"CLASSEMENT.1", "CLASSEMENT.2"}),
+		    #"Type modifié2" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur",{{"CLASSEMENT.1", Int64.Type}, {"CLASSEMENT.2", type text}}),
+		    #"Colonnes supprimées" = Table.RemoveColumns(#"Type modifié2",{"CLASSEMENT.2"}),
+		    #"Colonnes renommées" = Table.RenameColumns(#"Colonnes supprimées",{{"CLASSEMENT.1", "Nombre d'étoile"}}),
+		    #"Personnalisée ajoutée" = Table.AddColumn(#"Colonnes renommées", "LOCALISATION", each [ADRESSE] & "," & Text.From([CODE POSTAL]) & "," & [COMMUNE] & ",France"),
+		    #"Année insérée" = Table.AddColumn(#"Personnalisée ajoutée", "Année", each Date.Year([DATE DE CLASSEMENT]), Int64.Type),
+		    #"Type modifié" = Table.TransformColumnTypes(#"Année insérée",{{"CODE POSTAL", Int64.Type}}),
+		    #"Personnalisée ajoutée1" = Table.AddColumn(#"Type modifié", "Image Chambres", each "https://thumbs.dreamstime.com/b/bed-icon-vector-isolated-white-background-sign-line-outline-elements-linear-style-transparent-134157180.jpg"),
+		    #"Personnalisée ajoutée2" = Table.AddColumn(#"Personnalisée ajoutée1", "Image Type", each "https://static.thenounproject.com/png/1021592-200.png"),
+		    #"Personnalisée ajoutée3" = Table.AddColumn(#"Personnalisée ajoutée2", "Image étoiles ", each "https://i.pinimg.com/736x/ae/a6/b3/aea6b364cb1b7ff7f9cce057e47f9cfe.jpg")
+		in
+		    #"Personnalisée ajoutée3"
+	lineageTag: 925f6933-3337-4953-8bcc-7dfabcf55fee
+	queryGroup: 'Tables temporaires'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+/// Paramètre permettant de retracer le chemin complet vers le fichier Hebergement-paris.csv.
+expression CheminFichierHébergement = "C:\Users\kacem\OneDrive\Documents\TP-BI\Tp 1\Hebergement-paris.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 80d5b98d-69a8-4bda-bbe3-4e98ab3a8751
+	queryGroup: Paramètres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+/// Paramètre permettant de retracer le chemin complet vers le fichier fr_postal_codes.csv.
+expression CheminFichierCodesPostaux = "C:\Users\kacem\OneDrive\Documents\TP-BI\Tp 1\fr_postal_codes.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: ee9aa5cd-620c-44ac-9f46-c8575a751237
+	queryGroup: Paramètres
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

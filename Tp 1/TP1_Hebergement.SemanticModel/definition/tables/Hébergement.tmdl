@@ -1,0 +1,379 @@
+table Hébergement
+	lineageTag: 1ec65c96-1a06-4dc4-bd6b-adb468b05357
+
+	measure 'NOMBRE DE CHAMBRES MOYEN' = SUM('HÉBERGEMENT' [NOMBRE DE CHAMBRES])/COUNT('HÉBERGEMENT' [ADRESSE])
+		lineageTag: 15ab7f03-91e5-4318-bfb3-67886c55fe16
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'DATE DE CLASSEMENT'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 4e7503be-bdb1-49e5-b23d-fec7497dae19
+		summarizeBy: none
+		sourceColumn: DATE DE CLASSEMENT
+
+		variation Variation
+			isDefault
+			relationship: 62acfbfc-565f-417f-9ddb-4df165d30bbf
+			defaultHierarchy: LocalDateTable_7bb82687-8a0e-44fd-9c5a-f748b164de41.'Hiérarchie de dates'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'DATE DE PUBLICATION DE L''ÉTABLISSEMENT'
+		dataType: string
+		lineageTag: 26276015-2ee9-4b21-b69f-1478bbaf2b47
+		summarizeBy: none
+		sourceColumn: DATE DE PUBLICATION DE L'ÉTABLISSEMENT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TYPOLOGIE DE L''ÉTABLISSEMENT'
+		dataType: string
+		lineageTag: 2b70c376-2ef6-4005-a381-e603622c6002
+		summarizeBy: none
+		sourceColumn: TYPOLOGIE DE L'ÉTABLISSEMENT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nombre d''étoile'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4dfd64bd-5c6a-4277-8d14-69bd47042f3c
+		summarizeBy: sum
+		sourceColumn: Nombre d'étoile
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATÉGORIE
+		dataType: string
+		lineageTag: 3b048f8c-8bb8-4e03-8010-e2d6f6dfda7a
+		summarizeBy: none
+		sourceColumn: CATÉGORIE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MENTION
+		dataType: string
+		lineageTag: 7133b9b4-8700-4416-971f-3ea11e14da53
+		summarizeBy: none
+		sourceColumn: MENTION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NOM COMMERCIAL'
+		dataType: string
+		lineageTag: fc120ca6-6875-4ca3-a068-36713dd2d8f9
+		summarizeBy: none
+		sourceColumn: NOM COMMERCIAL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ADRESSE
+		dataType: string
+		lineageTag: 10159d98-c8d8-403a-9833-fd483e098aea
+		summarizeBy: none
+		sourceColumn: ADRESSE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CODE POSTAL'
+		dataType: int64
+		formatString: 0
+		lineageTag: 05318e6e-fc5e-4873-8830-e67473c8ad05
+		summarizeBy: sum
+		sourceColumn: CODE POSTAL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column COMMUNE
+		dataType: string
+		lineageTag: 2936d988-aa37-4e65-9f45-1573d22cf593
+		summarizeBy: none
+		sourceColumn: COMMUNE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TÉLÉPHONE
+		dataType: string
+		lineageTag: 4c1d113c-9dae-40d4-8922-273cb922c614
+		summarizeBy: none
+		sourceColumn: TÉLÉPHONE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column COURRIEL
+		dataType: string
+		lineageTag: 0f57752d-cf99-45bf-adf0-c5f1f5d6393c
+		summarizeBy: none
+		sourceColumn: COURRIEL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SITE INTERNET'
+		dataType: string
+		lineageTag: a3d27239-90a2-4813-93b5-7e3cb07e994f
+		summarizeBy: none
+		sourceColumn: SITE INTERNET
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TYPE DE SÉJOUR'
+		dataType: string
+		lineageTag: 0f7e5780-c4cb-4ca1-b310-90338bf18aeb
+		summarizeBy: none
+		sourceColumn: TYPE DE SÉJOUR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CAPACITÉ D''ACCUEIL (PERSONNES)'
+		dataType: string
+		lineageTag: 9a77ca77-d3b8-4a5a-8a89-59e798f387da
+		summarizeBy: none
+		sourceColumn: CAPACITÉ D'ACCUEIL (PERSONNES)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NOMBRE DE CHAMBRES'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f76ddda-3ad6-4656-a95e-2a5acace62d7
+		summarizeBy: sum
+		sourceColumn: NOMBRE DE CHAMBRES
+		sortByColumn: 'Ordre Intervalles'
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Hébergement","TableItemName":"NOMBRE DE CHAMBRES (compartiments)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column 'NOMBRE D''EMPLACEMENTS'
+		dataType: string
+		lineageTag: be4c8e03-5bd8-4f13-9907-c44216704031
+		summarizeBy: none
+		sourceColumn: NOMBRE D'EMPLACEMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NOMBRE D''UNITÉS D''HABITATION'
+		dataType: string
+		lineageTag: daca93c5-622f-47a5-bccd-466c99bedfa5
+		summarizeBy: none
+		sourceColumn: NOMBRE D'UNITÉS D'HABITATION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NOMBRE DE LOGEMENTS'
+		dataType: int64
+		formatString: 0
+		lineageTag: 36591ae4-0334-4820-82ef-99d1b82c05ca
+		summarizeBy: sum
+		sourceColumn: NOMBRE DE LOGEMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LOCALISATION
+		dataType: string
+		lineageTag: f676feba-eba9-4b0f-bf46-1ccde910f57f
+		dataCategory: Address
+		summarizeBy: none
+		sourceColumn: LOCALISATION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Année
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a44080e-6e0f-4c12-b849-8d82ecb7d15a
+		summarizeBy: sum
+		sourceColumn: Année
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Regroupement
+		dataType: string
+		lineageTag: eb28145d-b89a-4b9c-9706-acf960142492
+		summarizeBy: none
+		sourceColumn: Regroupement
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nombre de chambre intervalle'
+		dataType: string
+		lineageTag: c298e2e1-f943-48c8-9f7e-969910e4bf97
+		summarizeBy: none
+		sourceColumn: Nombre de chambre intervalle
+		sortByColumn: 'Ordre Intervalles'
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre Intervalles'
+		dataType: string
+		lineageTag: e1f40291-518e-43eb-97dd-c8d3e8a08699
+		summarizeBy: none
+		sourceColumn: Ordre Intervalles
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Début URL'
+		dataType: string
+		lineageTag: 2071a819-f3e9-4d00-a045-1a4f262c37a5
+		summarizeBy: none
+		sourceColumn: Début URL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'URL Site Internet'
+		dataType: string
+		lineageTag: 57b568ce-1c40-425a-8c0b-b74963fa4eae
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: URL Site Internet
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NOMBRE DE CHAMBRES (compartiments)' =
+			IF(
+				ISBLANK('Hébergement'[NOMBRE DE CHAMBRES]),
+				BLANK(),
+				INT('Hébergement'[NOMBRE DE CHAMBRES] / 25) * 25
+			)
+		formatString: 0
+		lineageTag: 34045185-8712-47a7-9ae7-b1bf3ccaf6be
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Hébergement"
+				          }
+				        },
+				        "Property": "NOMBRE DE CHAMBRES"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 25.0,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"h","Entity":"Hébergement"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"h"}},"Property":"NOMBRE DE CHAMBRES"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"h"}},"Property":"NOMBRE DE CHAMBRES"}},"Size":25.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Image Chambres'
+		dataType: string
+		lineageTag: 31e1f292-9e24-4884-a751-0af080c4544f
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Image Chambres
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Image Type'
+		dataType: string
+		lineageTag: 6e6a0394-a855-40ba-80cd-d9627a78eef7
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Image Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Image étoiles '
+		dataType: string
+		lineageTag: 865885d9-1090-4d6a-883c-e32c8c4e032d
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: "Image étoiles "
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Hébergement = m
+		mode: import
+		source =
+				let
+				    Source = Table.NestedJoin(#"Hébergement temporaire", {"CODE POSTAL"}, fr_postal_codes, {"Code postal"}, "fr_postal_codes", JoinKind.LeftOuter),
+				    #"Colonne conditionnelle ajoutée" = Table.AddColumn(Source, "Regroupement", each if [COMMUNE] = "PARIS" then "PARIS" else "Hors Paris"),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Colonne conditionnelle ajoutée",{{"NOMBRE DE CHAMBRES", Int64.Type}}),
+				    #"Colonne conditionnelle ajoutée1" = Table.AddColumn(#"Type modifié", "Personnalisé", each if [NOMBRE DE CHAMBRES] = null then "N/A" else if [NOMBRE DE CHAMBRES] < 25 then "0-24" else if [NOMBRE DE CHAMBRES] < 50 then "25-49" else if [NOMBRE DE CHAMBRES] < 75 then "50-74" else if [NOMBRE DE CHAMBRES] < 100 then "75-99" else if [NOMBRE DE CHAMBRES] < 125 then "100-124" else if [NOMBRE DE CHAMBRES] < 150 then "125-149" else 150),
+				    #"Colonne conditionnelle ajoutée2" = Table.AddColumn(#"Colonne conditionnelle ajoutée1", "Ordre Intervalles", each if [NOMBRE DE CHAMBRES] = null then 1 else if [NOMBRE DE CHAMBRES] < 25 then 2 else if [NOMBRE DE CHAMBRES] < 50 then 3 else if [NOMBRE DE CHAMBRES] < 75 then 4 else if [NOMBRE DE CHAMBRES] < 100 then 5 else if [NOMBRE DE CHAMBRES] < 125 then 6 else if [NOMBRE DE CHAMBRES] < 150 then 7 else 8),
+				    #"Colonne conditionnelle ajoutée3" = Table.AddColumn(#"Colonne conditionnelle ajoutée2", "Personnalisé.1", each if Text.StartsWith([SITE INTERNET], "http") then "" else if Text.StartsWith([SITE INTERNET], "www") then "http://" else "http://www."),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Colonne conditionnelle ajoutée3",{{"Personnalisé.1", "Début URL"}}),
+				    #"Personnalisée ajoutée" = Table.AddColumn(#"Colonnes renommées", "URL Site Internet", each Text.From([Début URL])&Text.From([SITE INTERNET])),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Personnalisée ajoutée",{{"Personnalisé", "Nombre de chambre intervalle"}})
+				in
+				    #"Colonnes renommées1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

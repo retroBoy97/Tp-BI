@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "TP1_Hebergement"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "091a1e3f-606a-4a35-9161-ba7160806143"
+  }
+}

@@ -1,0 +1,26 @@
+table NbJours
+	lineageTag: f3668644-8c3a-43b8-be18-35470b832f93
+
+	column NbJours
+		dataType: double
+		lineageTag: 5da9ff06-0faa-429f-b409-f2d707779f1f
+		summarizeBy: sum
+		sourceColumn: NbJours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition NbJours = m
+		mode: import
+		queryGroup: Paramètres
+		source =
+				let
+				    Source = Duration.Days(DateFin - DateDébut) + 1
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Number
+
