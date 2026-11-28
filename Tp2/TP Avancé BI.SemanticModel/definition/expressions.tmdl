@@ -4,7 +4,7 @@ expression Paramètre1 = #"Exemple de fichier" meta [IsParameterQuery=true, Bina
 
 	annotation PBI_ResultType = Binary
 
-expression CheminDossierVentes = "C:\Users\Dell\Downloads\Sources_de_donnees 1\Sources_de_donnees\Ventes" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression CheminDossierVentes = "C:\Users\kacem\OneDrive\Documents\TP-BI\Tp2\Sources_de_donnees\Sources_de_donnees\Ventes" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: ff31deb9-e575-4539-912b-b8ea9c74ce96
 	queryGroup: Paramètres
 
@@ -25,7 +25,7 @@ expression 'Transformer l''exemple de fichier' =
 
 expression 'Exemple de fichier' =
 		let
-		    Source = Folder.Files("C:\Users\Dell\Downloads\Sources_de_donnees 1\Sources_de_donnees\Ventes"),
+		    Source = Folder.Files(CheminDossierVentes),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1
@@ -36,11 +36,11 @@ expression 'Exemple de fichier' =
 
 expression 'Transformer le fichier' =
 		let
-		    Source = (Paramètre1) => let
-		        Source = Excel.Workbook(Paramètre1, null, true),
-		        Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data]
-		    in
-		        Table1_Table
+		    Source = (Paramètre1 as binary) => let
+		    Source = Excel.Workbook(Paramètre1, null, true),
+		    Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data]
+		in
+		    Table1_Table
 		in
 		    Source
 	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transformer l\u0027exemple de fichier""}" ]
@@ -65,7 +65,7 @@ expression DateFin = #date(2015, 12, 31) meta [IsParameterQuery=true, Type="Date
 
 	annotation PBI_ResultType = Date
 
-expression CheminDossierFichiersSources = "C:\Users\Dell\Downloads\Sources_de_donnees 1\Sources_de_donnees" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression CheminDossierFichiersSources = "C:\Users\kacem\OneDrive\Documents\TP-BI\Tp2\Sources_de_donnees\Sources_de_donnees" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 6b047918-675b-4e2b-8de0-0d2a31c6afac
 	queryGroup: Paramètres
 
